@@ -20,4 +20,4 @@ rust-version = "1.94.0"
 
 [dependencies]
 image = { version = "0.25.10", default-features = false }
-jixel = "0.2.16"
+jixel = "0.2.17"
