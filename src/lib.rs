@@ -56,7 +56,7 @@ impl<'a> JixelEncoder<'a> {
             speed: Speed::Slow,
             ..EncodeConfig::default()
         }
-        .with_distance(1.0);
+        .with_distance(1.25);
         Self::with_config(writer, def)
     }
 
