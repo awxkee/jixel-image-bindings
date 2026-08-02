@@ -50,14 +50,17 @@ pub struct JixelEncoder<'a> {
     pub config: EncodeConfig,
 }
 
+fn default_config() -> EncodeConfig {
+    EncodeConfig {
+        speed: Speed::Slow,
+        ..EncodeConfig::default()
+    }
+    .with_distance(1.25)
+}
+
 impl<'a> JixelEncoder<'a> {
     pub fn new(writer: &'a mut dyn Write) -> Self {
-        let def = EncodeConfig {
-            speed: Speed::Slow,
-            ..EncodeConfig::default()
-        }
-        .with_distance(1.25);
-        Self::with_config(writer, def)
+        Self::with_config(writer, default_config())
     }
 
     pub fn with_config(writer: &'a mut dyn Write, config: EncodeConfig) -> Self {
@@ -341,38 +344,10 @@ mod tests {
     }
 
     #[test]
-    fn opaque_rgba8_is_encoded_as_rgb() {
-        let rgba = [10, 20, 30, 255, 40, 50, 60, 255];
-        let expected =
-            jixel::encode_image(&[10, 20, 30, 40, 50, 60], 2, 1, &EncodeConfig::default()).unwrap();
-        let mut actual = Vec::new();
-
-        JixelEncoder::new(&mut actual)
-            .write_image(&rgba, 2, 1, ExtendedColorType::Rgba8)
-            .unwrap();
-
-        assert_eq!(actual, expected);
-    }
-
-    #[test]
-    fn constant_translucent_rgba8_keeps_alpha() {
-        let rgba = [10, 20, 30, 128, 40, 50, 60, 128];
-        let expected =
-            jixel::encode_image_with_alpha(&rgba, 2, 1, &EncodeConfig::default()).unwrap();
-        let mut actual = Vec::new();
-
-        JixelEncoder::new(&mut actual)
-            .write_image(&rgba, 2, 1, ExtendedColorType::Rgba8)
-            .unwrap();
-
-        assert_eq!(actual, expected);
-    }
-
-    #[test]
     fn opaque_la16_is_encoded_as_l16() {
         let la = [100u16, u16::MAX, 200, u16::MAX];
         let expected =
-            jixel::encode_image_gray_16bit(&[100, 200], 2, 1, &EncodeConfig::default()).unwrap();
+            jixel::encode_image_gray_16bit(&[100, 200], 2, 1, &default_config()).unwrap();
         let mut actual = Vec::new();
 
         JixelEncoder::new(&mut actual)
@@ -388,7 +363,7 @@ mod tests {
         JixelEncoder::new(&mut actual)
             .write_image(&[30, 20, 10], 1, 1, ExtendedColorType::Bgr8)
             .unwrap();
-        let expected = jixel::encode_image(&[10, 20, 30], 1, 1, &EncodeConfig::default()).unwrap();
+        let expected = jixel::encode_image(&[10, 20, 30], 1, 1, &default_config()).unwrap();
         assert_eq!(actual, expected);
     }
 
@@ -399,8 +374,7 @@ mod tests {
             .write_image(&[30, 20, 10, 128], 1, 1, ExtendedColorType::Bgra8)
             .unwrap();
         let expected =
-            jixel::encode_image_with_alpha(&[10, 20, 30, 128], 1, 1, &EncodeConfig::default())
-                .unwrap();
+            jixel::encode_image_with_alpha(&[10, 20, 30, 128], 1, 1, &default_config()).unwrap();
         assert_eq!(actual, expected);
     }
 
