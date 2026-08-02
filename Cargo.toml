@@ -1,0 +1,23 @@
+[workspace]
+members = ["app"]
+exclude = []
+
+[package]
+name = "jixel-image-bindings"
+version = "0.1.0"
+edition = "2024"
+description = "Tiny JPEG XL encoder"
+readme = "README.md"
+keywords = ["jpegxl", "jxl", "encoder", "image", "compression"]
+license = "BSD-3-Clause OR Apache-2.0"
+authors = ["Radzivon Bartoshyk"]
+documentation = "https://docs.rs/jixel-image-bindings"
+categories = ["multimedia::images", "compression", "encoding"]
+homepage = "https://github.com/awxkee/jixel-image-bindings"
+repository = "https://github.com/awxkee/jixel-image-bindings"
+exclude = ["*.jpg", "/assets", "*.png", "*.sh", "/assets/*", "/scripts/*", "/tools/*", "parameters_fit/*", ".github/*"]
+rust-version = "1.94.0"
+
+[dependencies]
+image = { version = "0.25.10", default-features = false }
+jixel = { git = "https://github.com/awxkee/jixel", rev = "a9c6b4dc192cefc0016ccdc73333442da1d8098b" }
