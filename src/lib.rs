@@ -41,8 +41,8 @@ use image::error::{
 use image::{DynamicImage, ExtendedColorType, ImageEncoder, ImageError, ImageResult};
 
 pub use jixel::{
-    ColorEncoding, ColorSpace, DarkAqConfig, EncodeConfig, Orientation, Primaries, RenderingIntent,
-    Speed, TransferFunction, WhitePoint, distance_from_quality,
+    ColorEncoding, ColorSpace, EncodeConfig, Orientation, Primaries, RenderingIntent, Speed,
+    TransferFunction, WhitePoint, distance_from_quality,
 };
 
 pub struct JixelEncoder<'a> {

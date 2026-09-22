@@ -1,5 +1,5 @@
-use std::fs;
 use jixel_image_bindings::JixelEncoder;
+use std::fs;
 
 fn main() {
     let img = image::open("./assets/pexels-dkeats-33624937.jpg").unwrap();
